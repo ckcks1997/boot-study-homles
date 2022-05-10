@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="community">
+
+<select id = "comBoardCount" resultType = "int" parameterType = "String">
+	select count(*) from community where boardid = #{boardid}
+</select> 
+
+<select id = "myComCount" resultType = "int" parameterType = "String">
+	select count(*) from community where nickname = #{nickname}
+</select> 
+
+<!-- 최신순 출력 -->
+<select id = "comBoardList" resultType = "community"  parameterType = "map">
+	select * from(
+  	select rownum rnum, a.* from 
+  	(select * from (select * from community where boardid = #{boardid} order by board_num desc) com
+  	left join (select nickname, picture from STUDY_MEMBER) study on com.nickname = study.nickname) a )
+  	where rnum between #{start} and #{end}
+</select> 
+
+<!-- 댓글순 출력, 댓글수가 같으면 최신순으로 출력 -->
+<select id = "comBoardReply" resultType = "community"  parameterType = "map">
+	select * from(
+  	select rownum rnum, a.* from 
+  	(select * from (select * from community where boardid = #{boardid} order by replycnt desc, board_num desc) com
+  	left join (select nickname, picture from STUDY_MEMBER) study on com.nickname = study.nickname) a )
+  	where rnum between #{start} and #{end}
+</select> 
+
+<!-- 조회수순 출력, 조회수가 같으면 최신순으로 출력 -->
+<select id = "comBoardRead" resultType = "community"  parameterType = "map">
+	select * from(
+  	select rownum rnum, a.* from 
+  	(select * from (select * from community where boardid = #{boardid} order by readcnt desc, board_num desc) com
+  	left join (select nickname, picture from STUDY_MEMBER) study on com.nickname = study.nickname) a )
+  	where rnum between #{start} and #{end}
+</select>
+
+<!-- 내가 쓴 문의글 출력, 최신순으로 출력 -->
+<select id = "comBoardMyAsk" resultType = "community"  parameterType = "map">
+	select  * from (select rownum rnum, a.* from (
+	select * from community where boardid = 5 and nickname = #{nickname} order by board_num desc) a)
+	where rnum between #{start} and #{end}
+</select>
+
+
+
+
+
+<select id = "comBoardOne" resultType = "community" parameterType ="int">
+	select * from (select * from community where board_num = #{board_num}) com
+	left join (select picture, nickname from study_member) study on com.nickname = study.nickname
+</select>
+
+
+<insert id = "comInsertBoard" parameterType = "community">
+	insert into community  values (#{board_num}, #{title}, #{content}, #{boardid}
+			,sysdate,#{ip},0,#{nickname},0)
+</insert>
+
+<select id = "comNextNum" resultType = "int">
+	select board_seq.nextval from dual
+</select>
+
+<update id = "comBoardUpdate" parameterType = "community">
+	update community set title = #{title}, content = #{content} where board_num = #{board_num}
+</update>
+
+<delete id="comBoardDelete" parameterType= "int">
+	delete from community where board_num = #{board_num}
+</delete>
+
+
+<!-- 조회수 증가 -->
+<update id= "comReadCountUp" parameterType= "int">
+	update community set readcnt = readcnt + 1 where board_num = #{board_num}
+</update>
+
+
+<!-- 검색수 -->
+<select id = "comSearchCount" resultType = "int" parameterType = "map">
+	select count(*) from community where boardid = #{boardid} and ${part} like '%${searchData}%'
+</select> 
+
+
+
+
+<!-- 검색목록 -->
+<select id = "comSearchList" resultType = "community"  parameterType = "map">
+	select * from 
+	(select rownum rnum, a.* from 
+	(select * from (select * from community where boardid = #{boardid} and ${part} like '%${searchData}%' order by board_num desc) com
+  	left join 
+  	(select picture, nickname from study_member) study on com.nickname = study.nickname ) a)
+	where rnum between #{start} and #{end}
+</select> 
+
+<!-- 검색 후 댓글 순 -->
+<select id = "comSearchListReply" resultType = "community"  parameterType = "map">
+	select * from 
+	(select rownum rnum, a.* from 
+	(select * from (select * from community where boardid = #{boardid} and ${part} like '%${searchData}%' order by replycnt desc) com
+  	left join 
+  	(select picture, nickname from study_member) study on com.nickname = study.nickname ) a)
+	where rnum between #{start} and #{end}
+</select> 
+
+<!-- 검색 후 조회수순 -->
+<select id = "comSearchListRead" resultType = "community"  parameterType = "map">
+	select * from 
+	(select rownum rnum, a.* from 
+	(select * from (select * from community where boardid = #{boardid} and ${part} like '%${searchData}%' order by readcnt desc) com
+  	left join 
+  	(select picture, nickname from study_member) study on com.nickname = study.nickname ) a)
+	where rnum between #{start} and #{end}
+</select> 
+
+
+
+
+<!-- 메인화면 최신글 보드 리스트 -->
+<select id = "comMainBoardList" resultType = "community" parameterType = "string">
+    select ROWNUM  , A.* from 
+    (select * from COMMUNITY where BOARDID = #{boardId} order by board_num desc) 
+    A 
+    where ROWNUM &lt; 5
+</select> 
+
+
+
+
+	<!-- 내가쓴 글 목록 -->
+	<select id = "comBoardmyList1" resultType = "community"  parameterType = "map">
+	select  * from (select rownum rnum, a.* from (
+	select * from community where nickname = #{nickname} order by board_num desc) a)
+	where rnum between #{start} and #{end}
+</select> 
+</mapper>

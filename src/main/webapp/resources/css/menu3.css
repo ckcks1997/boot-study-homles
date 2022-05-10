@@ -1,0 +1,44 @@
+/* aside */
+ul, li {
+    list-style: none;
+}
+
+li {
+    font-weight:700;
+    color: #777;
+}
+li:hover {
+    font-weight:700;
+    color:#f55555;
+    
+}
+
+li>a {
+    color: rgb(10, 10, 10);
+}
+
+a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.aside-content {
+    display: block;
+    width: 200px;
+    /*height와 line-height를 같은 값으로 주면 세로로 중앙 정렬이 된다.*/
+    height: 40px;
+    line-height: 40px;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.selected, .selected:hover {
+    padding-left:10px;
+    color:white;
+    background: #f55555; 
+    border-radius:10px;
+}
+
+.selected{
+    color:white;
+}

@@ -1,0 +1,86 @@
+/* banner */
+.banner {
+	position: relative;
+	height: 400px;
+	background-color: #f55555;
+}
+.banner-p{
+    font-family: "kita"; 
+    color:white;
+}
+.b-container1 {
+	position: relative;
+	margin: auto;
+	height: 100%;
+}
+
+.b-img {
+	position: absolute;
+	top: 10%;
+	right: 5%;
+	text-align: right;
+}
+
+.b-img>img {
+	display: none;
+	text-align: right;
+	max-width: 500px;
+}
+
+@media only screen and (min-width: 992px) {
+	.b-img>img {
+		display: block;
+		text-align: right;
+		max-width: 500px;
+	}
+}
+
+.b-text {
+	color: #fff0f0;
+	position: absolute;
+	top: 20%;
+	left: 10px;
+	max-width: 400px;
+	font-size: 1.2rem;
+}
+
+.footer {
+	height: 200px;
+	background: #777;
+	text-align: center;
+}
+
+.footer-content {
+	padding-top: 50px;
+}
+
+.search-div {
+	position: relative;
+}
+
+.custom-btn {
+	font-size: 1.2rem;
+	position: absolute;
+	background: none;
+	border: none;
+	top: 17px;
+	right: 20px;
+}
+
+.s-content{
+    color:black;
+}
+.s-content:hover{
+    color:#f55555;
+}
+
+.boardtable{ 
+    padding: 10px; 
+    border-radius:10px;
+}
+
+#bar {
+	border: 3px solid #c47100;
+	border-radius: 50px;
+	padding: 30px;
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reply">
+
+
+
+<!-- 댓글 등록 -->
+<insert id = "insertReply" parameterType = "reply">
+	insert into reply values (#{reply_num}, #{board_num}, #{nickname}, sysdate, #{content})
+</insert>
+
+
+<select id = "replyNextNum" resultType = "int">
+	select reply_seq.nextval from dual
+</select>
+
+<!-- 댓글 가져오기 -->
+<select id = "replyWriteList" resultType = "reply" parameterType = "int">
+	select * from 
+	(select reply_num, nickname, content, to_char(regdate, 'yyyy-mm-dd') regdate2 from reply 
+	where board_num = #{board_num} order by regdate asc) reply
+ 	left join  
+  	(select nickname, picture from study_member) study on reply.nickname = study.nickname   
+</select>
+
+
+<!-- 댓글 갯수 -->
+<select id = "replyCount" resultType = "int" parameterType = "int">
+	select count(*) from reply where board_num = #{board_num}
+</select>
+
+<!--삭제시 사용, 댓글 하나가져오기 -->
+<select id = "replyOne" resultType = "reply" parameterType = "int">
+	select * from reply where reply_num = #{reply_num}
+</select>
+
+<!-- 댓글 삭제 -->
+<select id = "deleteReply" parameterType = "int">
+	delete from reply where reply_num = #{reply_num}
+</select>
+
+
+<!-- 원글의 댓글 수 업데이트 -->
+<update id = "comReplyCount" parameterType = "int">
+	update community
+	set replycnt = (select count(*) from reply  where board_num = #{board_num})
+	where board_num = #{board_num}
+</update>
+
+
+<update id = "groupReplyCountUp" parameterType = "int">
+	update GROUP_BOARD
+	set replycnt = (select count(*) from reply  where board_num = #{board_num})
+	where board_num = #{board_num}
+</update>
+</mapper>

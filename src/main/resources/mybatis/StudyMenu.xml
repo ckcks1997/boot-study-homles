@@ -1,0 +1,180 @@
+<?xml version="1.0"	encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="studymenu">
+
+	<select id="menuCount" resultType="int" parameterType="string">
+		select count(*) from study_menu where menuid = #{menuid}
+	</select>
+	
+	<select id="myStudyCount" resultType="int" parameterType="string">
+		select count(*) from study_menu where nickname = #{nickname}
+	</select>
+	
+	<select id = "studyMenuOne" resultType = "studymenu" parameterType ="int">
+	select * from study_menu where board_num = #{board_num}
+	</select>
+	
+	<select id="offAllCount" resultType="int">
+		select count(*) from study_menu where menuid between 2 and 7
+	</select>
+	
+	<select id="onAllCount" resultType="int">
+		select count(*) from study_menu where menuid between 9 and 14
+	</select>
+	
+	<select id="onoffAllCount" resultType="int">
+		select count(*) from study_menu where menuid between 16 and 21
+	</select>
+
+	<select id="menuList" resultType="studymenu" parameterType="map">
+		select * from (
+		select rownum rnum, a.*, b.count from (
+		select * from study_menu where menuid = #{menuid} order by regdate desc)
+    	a left join (select BOARDNUM, count(*) as count from GROUP_MEMBER group by BOARDNUM) b on a.BOARD_NUM = b.BOARDNUM)
+		where rnum BETWEEN #{start} and #{end}
+	</select>
+	
+	<select id="onallList" resultType="studymenu" parameterType="map">
+		select * from (
+		select rownum rnum, a.*, b.count from (
+		select * from study_menu where menuid between 9 and 14 order by regdate desc)
+    	a left join (select BOARDNUM, count(*) as count from GROUP_MEMBER group by BOARDNUM) b on a.BOARD_NUM = b.BOARDNUM)
+		where rnum BETWEEN #{start} and #{end}
+	</select>
+	
+	<select id="offallList" resultType="studymenu" parameterType="map">
+		select * from (
+		select rownum rnum, a.*, b.count from (
+		select * from study_menu where menuid between 2 and 7 order by regdate desc)
+    	a left join (select BOARDNUM, count(*) as count from GROUP_MEMBER group by BOARDNUM) b on a.BOARD_NUM = b.BOARDNUM)
+		where rnum BETWEEN #{start} and #{end}
+	</select>
+	
+	<select id="onoffallList" resultType="studymenu" parameterType="map">
+		select * from (
+		select rownum rnum, a.*, b.count from (
+		select * from study_menu where menuid between 16 and 21 order by regdate desc)
+    	a left join (select BOARDNUM, count(*) as count from GROUP_MEMBER group by BOARDNUM) b on a.BOARD_NUM = b.BOARDNUM)
+		where rnum BETWEEN #{start} and #{end}
+	</select>
+		
+	<insert id="insertMenu" parameterType="studymenu">
+	insert into study_menu values 
+	(#{board_num},#{nickname},#{title},#{subject},#{price},#{pernum},#{region},#{content},#{menuid},sysdate,#{latitude},#{longitude})
+	</insert>
+	
+	<select id = "menuNextNum" resultType = "int">
+	select board_seq.nextval from dual
+	</select>
+	
+	<select id = "menuBoardOne" resultType = "studymenu" parameterType ="int">
+	select * from study_menu where board_num = #{board_num}
+	</select>
+	
+
+	
+
+	<select id="list2"  resultType="studymenu" parameterType = "map">
+	select * form study_menu where nickname = #{nickname}
+	</select>
+	<!-- ============================================================================================================== -->
+	<select id="studySearch" parameterType="map" resultType="StudyMenu">
+	select * from study_menu where (${part}) like (#{searchData})
+	and menuid = #{menuid}
+	</select>
+
+	<select id="studySearchCount" resultType="int" parameterType="map">
+	select count(*) from study_menu where  menuid = #{menuid} and (${part}) like (#{searchData})
+	</select>
+	
+	<select id = "studySearchList" resultType = "studymenu"  parameterType = "map">
+	select * from (select rownum rnum, a.* from 
+	(select * from study_menu where menuid = #{menuid} and (${part}) like (#{searchData}) order by board_num desc) a)
+	where rnum between #{start} and #{end}
+	</select> 
+	
+	<!-- ============================================================================================================== -->
+	<select id="onAllSearch" parameterType="map" resultType="StudyMenu">
+	select * from study_menu where (${part}) like (#{searchData})
+	and menuid between 9 and 14
+	</select>
+
+	<select id="onAllSearchCount" resultType="int" parameterType="map">
+	select count(*) from study_menu where  menuid between 9 and 14 and (${part}) like (#{searchData})
+	</select>
+	
+	<select id = "onAllSearchList" resultType = "studymenu"  parameterType = "map">
+	select * from (select rownum rnum, a.* from 
+	(select * from study_menu where menuid between 9 and 14 and (${part}) like (#{searchData}) order by board_num desc) a)
+	where rnum between #{start} and #{end}
+	</select> 
+	<!-- ============================================================================================================== -->
+	<select id="offAllSearch" parameterType="map" resultType="StudyMenu">
+	select * from study_menu where (${part}) like (#{searchData})
+	and menuid between 2 and 7
+	</select>
+
+	<select id="offAllSearchCount" resultType="int" parameterType="map">
+	select count(*) from study_menu where  menuid between 2 and 7 and (${part}) like (#{searchData})
+	</select>
+	
+	<select id = "offAllSearchList" resultType = "studymenu"  parameterType = "map">
+	select * from (select rownum rnum, a.* from 
+	(select * from study_menu where menuid between 2 and 7 and (${part}) like (#{searchData}) order by board_num desc) a)
+	where rnum between #{start} and #{end}
+	</select> 
+	<!-- ============================================================================================================== -->
+	<select id="onoffAllSearch" parameterType="map" resultType="StudyMenu">
+	select * from study_menu where (${part}) like (#{searchData})
+	and menuid between 16 and 21
+	</select>
+
+	<select id="onoffAllSearchCount" resultType="int" parameterType="map">
+	select count(*) from study_menu where  menuid between 16 and 21 and (${part}) like (#{searchData})
+	</select>
+	
+	<select id = "onoffAllSearchList" resultType = "studymenu"  parameterType = "map">
+	select * from (select rownum rnum, a.* from 
+	(select * from study_menu where menuid between 16 and 21 and (${part}) like (#{searchData}) order by board_num desc) a)
+	where rnum between #{start} and #{end}
+	</select> 
+	<!-- ============================================================================================================== -->
+	<update id = "studyUpdate" parameterType = "studymenu">
+	update study_menu set title = #{title}, subject = #{subject}, region = #{region}, pernum = #{pernum}, price = #{price}, 
+	content = #{content}, latitude = #{latitude}, longitude = #{longitude} where board_num = #{board_num}
+	</update>
+	
+	<delete id="studyDelete" parameterType= "int">
+	delete from study_menu where board_num = #{board_num}
+	</delete>
+	
+
+	<!-- 내가 쓴 게시물 리스트 -->
+	<select id="mylist2" resultType="studymenu" parameterType="map">
+		select * from ( select rownum rnum, a.* from (
+		select * from study_menu where nickname = #{nickname} order by board_num desc) a)
+		where rnum BETWEEN #{start} and #{end}
+	</select>
+	
+	<!-- 메인화면 - 최신컨텐츠 3개 (3개 테이블 조인)-->
+    <select id="mainNewStudy3" resultType = "mainRecentStudy">   
+		select d.*, e.count
+		from (select rownum rn, c.*
+		      from (select a.TITLE,a.nickname, a.board_num, a.menuid, a.pernum, a.region, b.point
+		            from study_menu a,
+		                 study_member b
+		            where a.nickname = b.nickname
+		            order by a.regdate desc) c
+		      where rownum &lt; 4 ) d
+		left join
+		     (select boardnum, count(*) as count
+		      from group_member
+		      group by boardnum) e
+		on d.board_num = e.boardnum
+		order by d.rn asc
+    </select>
+
+	
+</mapper>

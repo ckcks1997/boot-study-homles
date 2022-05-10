@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="studymember">
+
+	<select id="studyMemberOne" resultType="studymember"
+		parameterType="string">
+		select * from study_member where email=#{value}
+	</select>
+
+
+	<select id="studyMemberOneByNick" resultType="studymember"
+		parameterType="string">
+		select * from study_member where nickname=#{value}
+	</select>
+
+	<select id="studyMembeByNickname" resultType="studymember"
+		parameterType="string">
+		select * from study_member where nickname=#{value}
+	</select>
+	<insert id="insertStudyMember" parameterType="studymember">
+		insert into
+		study_member (email, password, nickname, name, tel, picture, point,
+		regdate)
+		values(#{email},#{password},#{nickname},#{name},#{tel},#{picture}, 50,
+		sysdate)
+	</insert>
+
+	<select id="studyMemberIdExist" parameterType="string"
+		resultType="int">
+		select count(*) from study_member where email = #{value}
+	</select>
+
+	<select id="studyMemberNicknameExist" parameterType="string"
+		resultType="int">
+		select count(*) from study_member where nickname = #{nickname}
+	</select>
+
+	<update id="studyMemberIntroUpdate" parameterType="map">
+		update study_member set profile_intro = #{intro} where email=#{email}
+	</update>
+
+	<delete id="studyMemberDelete" parameterType="string">
+		delete from study_member where email= #{id}
+	</delete>
+
+	<update id="changePassword" parameterType="map">
+		update study_member set password = #{newPass} where email=#{email}
+	</update>
+
+	<update id="changePoint" parameterType="map">
+		update study_member set point = #{point} where nickname=#{nickname}
+	</update>
+	
+	<update id="changePic" parameterType="map">
+		update study_member set picture = #{picture} where nickname=#{nickname}
+	</update>
+	
+	<select id="getPoint" parameterType="string"
+		resultType="studymember">
+		select * from study_member where nickname = #{nickname}
+	</select>
+
+
+</mapper>

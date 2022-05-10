@@ -1,0 +1,95 @@
+/* 명언 */
+.famous-saying-box {
+    height: 150px;
+    background-color: #333b3d;
+}
+
+.color-white {
+    color: white;
+}
+
+.footer-content {
+    padding-top: 50px;
+}
+
+/* aside */
+ul, li {
+    list-style: none;
+}
+
+li>a {
+    color: rgb(10, 10, 10);
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+h2, h3, h5 {
+	font-weight: bold;
+}
+
+.btn-color{
+    color:white;
+    background-color:#c47100;
+    border: none;
+}
+.btn-color:hover, 
+.btn-color:active, 
+.btn-color:visited{
+    color:white;
+    background-color:#a35100;
+    border: none;
+}
+.container-css {
+	background: #f8f8f8;
+	border-radius: 20px;
+}
+
+.input-border-round {
+	border-radius: 20px;
+}
+
+.interest-tag {
+	font-weight: bold;
+	margin: 2px;
+}
+
+.h5-subinfo {
+	font-size: 0.8rem;
+	font-weight: bold;
+	color: #C47100;
+}
+.btn-c{
+    background-color:#f55555;
+    color:white;
+}
+
+
+.a-color{
+    color:black;
+}
+.a-color:hover{
+    color:black;
+}
+ 
+.i-title{
+    font-size:1.2rem;
+    font-weight: 700;
+}
+.leader{
+    padding:3px;
+    color:white;
+    font-weight:700;
+    font-size:0.8rem;
+    background-color:#f55555;
+    border-radius:5px;
+}
+.jowon{
+    padding:3px;
+    color:white;
+    font-weight:700;
+    font-size:0.8rem;
+    background-color:#555555;
+    border-radius:5px;
+}

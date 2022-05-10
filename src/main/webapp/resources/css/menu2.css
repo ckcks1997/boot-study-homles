@@ -1,0 +1,52 @@
+.aside-content {
+	display: block;
+	width: 150px;
+	/*height와 line-height를 같은 값으로 주면 세로로 중앙 정렬이 된다.*/
+	height: 40px;
+	line-height: 40px;
+	text-align: left;
+	padding-left: 10px;  
+	margin-bottom: 10px;
+	cursor:pointer;
+	color:black;
+	font-weight:bold;
+}
+
+.aside-content:hover {
+	display: block;
+	width: 150px;
+	/*height와 line-height를 같은 값으로 주면 세로로 중앙 정렬이 된다.*/
+	height: 40px;
+	line-height: 40px; 
+	text-align: left;
+	padding-left: 10px;  
+	margin-bottom: 10px;
+	color:#f55555;
+	border-bottom:2px solid #f55555;
+    font-weight:bold;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 100px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 10px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
